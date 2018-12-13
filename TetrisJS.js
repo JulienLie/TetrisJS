@@ -5,6 +5,7 @@ let boucle = null;
 let depla = null;
 let key = -1;
 let tet = null;
+let score = 0;
 
 class Tetraminos{
     constructor(pos, tab, color){
@@ -53,8 +54,8 @@ class Tetraminos{
         if(!bool) this.pos[0] -= 1;
         this.mettre();
         if(!bool){
-            getTetraminos();
             checklines();
+            getTetraminos();
         }
     }
 
@@ -74,10 +75,6 @@ class Tetraminos{
         this.mettre();
     }
 
-    // 11 21 12 11
-    // 21 22 22 12
-    // 31 23 32 13
-
     rotate(){
         this.effacer();
         let newTab =[];
@@ -95,6 +92,11 @@ class Tetraminos{
     }
 }
 
+function setScore(s){
+    score = s;
+    document.getElementById('score').innerHTML = 'score:'+s;
+}
+
 function draw(){
     let canvas = document.getElementById('canvas');
     if(canvas === null) return;
@@ -109,8 +111,30 @@ function draw(){
     }
 }
 
-function checklines(){
-    
+function checklines(){ 
+    let nbr = 0;
+    let pos = -1;       
+    for(let i = grille.length-1; i >= 0; i--){
+        let bool = true;
+        for(let j = 0; j < grille[i].length && bool; j++){
+            if(grille[i][j] === '#ffffff') bool = false;
+        }
+        if(bool){
+            for(let j = 0; j < grille[i].length; j++){
+                grille[i][j] = '#ffffff';
+            }
+            nbr++;
+            if(pos < 0) pos = i;
+        }
+    }
+    if(nbr === 0) return;
+    for(let i = pos-nbr; i >= 0; i--){
+        for(let j = 0; j < grille[i].length; j++){
+            grille[i+nbr][j] = grille[i][j];
+        }
+    }
+    let s = score + 80*(nbr+1);
+    setScore(s);
 }
 
 function getTetraminos() {
