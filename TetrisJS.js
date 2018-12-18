@@ -140,7 +140,7 @@ function checklines(){
 function getTetraminos() {
     let r = Math.round(Math.random() * (colors.length-1));
     let c = colors[r];
-    r = Math.round(Math.random() * 6);
+    r = Math.floor(Math.random() * 6.9999999999999);
     tetraminos(r, c);
 }
 
