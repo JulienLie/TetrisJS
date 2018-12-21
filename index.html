@@ -4,13 +4,18 @@
     <meta charset="UTF-8">
     <title>TetrisJS</title>
     <script src="TetrisJS.js"></script>
+    <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
     <h1>TetrisJS</h1>
     <div class="main">
-        <p class="text" id="score">Score:0</p>
-        <canvas id="canvas" style="border: 2px solid black" width="240" height="480"></canvas>
-        <embed src="assets/tetris-official-theme-song.mp3" autostart="true" loop="true" hidden="true"></embed> 
+        <ul id="info">
+            <li><p class="text" id="score">Score:0</p></li>
+            <li><p class="text" id="lines">Lignes: 0</p></li>
+            <li><p class="text" id="level">Level: 1</p></li>
+        </ul>
+        <canvas id="canvas" width="240" height="480"></canvas>
+        <embed src="assets/tetris-official-theme-song.mp3" autostart="true" loop="true" hidden="true"></embed>
     </div>
     <script>
         init();

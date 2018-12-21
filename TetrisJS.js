@@ -1,4 +1,4 @@
-const colors = ['#ff0000', '#0000ff', '#00ff00', '#ff7700', '#ffff00', '#00ffed'];
+const colors = ['#ff0000', '#00ffff', '#696969', '#800000', '#ff00ff', '#0000ff', '#00ff00'];
 
 let grille = [];
 let boucle = null;
@@ -6,6 +6,8 @@ let depla = null;
 let key = -1;
 let tet = null;
 let score = 0;
+let lines = 0;
+let level = 1;
 
 class Tetraminos{
     constructor(pos, tab, color){
@@ -92,11 +94,6 @@ class Tetraminos{
     }
 }
 
-function setScore(s){
-    score = s;
-    document.getElementById('score').innerHTML = 'score:'+s;
-}
-
 function draw(){
     let canvas = document.getElementById('canvas');
     if(canvas === null) return;
@@ -133,18 +130,41 @@ function checklines(){
             grille[i+nbr][j] = grille[i][j];
         }
     }
-    let s = score + 80*(nbr+1);
-    setScore(s);
+    let s = 80*(nbr+1);
+    setLine(lines+nbr);
+    setScore(score + s);
+}
+
+function setLine(l){
+    addLines = function(n){
+        for(let i = 0; i < n; i++){
+            lines += 1;
+            if(lines !== 0 && (lines % 10) === 0) setLevel(level+1);
+        }
+    }
+    if(l === 0) lines = 0;
+    else if(l > lines) addLines(l-lines); 
+    document.getElementById('lines').innerHTML = "Ligne: " + lines;
+}
+
+
+
+function setLevel(l){
+    level = l;
+    document.getElementById('level').innerHTML = "Level: " + level; 
+}
+
+function setScore(s){
+    score = s;
+    document.getElementById('score').innerHTML = 'Score:'+s;
 }
 
 function getTetraminos() {
-    let r = Math.round(Math.random() * (colors.length-1));
-    let c = colors[r];
     r = Math.floor(Math.random() * 6.9999999999999);
-    tetraminos(r, c);
+    tetraminos(r);
 }
 
-function tetraminos(i, c) {
+function tetraminos(i) {
     if(i > 6) {
         end();
         return;
@@ -179,6 +199,7 @@ function tetraminos(i, c) {
             pos = [[0, 1, 1], [1, 1, 0]];
             break;
     }
+    let c = colors[i];
     tet = new Tetraminos([0, r], pos, c);
     if(tet.canPlace()){
         for(let j = 0; j < pos.length; j++){
@@ -187,7 +208,7 @@ function tetraminos(i, c) {
             }
         }
     }
-    else tetraminos(i+1, c);
+    else tetraminos(i+1);
 }
 
 window.onkeypress = function (e) {
@@ -228,7 +249,8 @@ function interval(){
                 break;
         }
         key = -1;
-        if((nbr+1) % 50 === 0) move();
+        console.log(level);
+        if((nbr+1) % (51-(level*2)) === 0) move();
         draw();
         nbr++;
     }, 10);
@@ -247,13 +269,17 @@ function end() {
 
 function init() {
     end();
+    setLine(0);
+    setScore(0);
+    setLevel(1);
+    grille = [];
     for(let i = 0; i < 24; i++){
         grille.push([]);
         for(let j = 0; j < 12; j++){
             grille[i][j] = '#ffffff';
         }
     }
-    console.log('test:' + ('#ffffff' !== '#ffffff'));
+    //console.log('test:' + ('#ffffff' !== '#ffffff'));
     getTetraminos();
     draw();
 }
