@@ -10,15 +10,31 @@
     <h1>TetrisJS</h1>
     <div class="main">
         <ul id="info">
-            <li><p class="text" id="score">Score:0</p></li>
+            <li><p class="text" id="score">Score: 0</p></li>
             <li><p class="text" id="lines">Lignes: 0</p></li>
             <li><p class="text" id="level">Level: 1</p></li>
+            <li><button id="mute" onclick="mute()"><img src="https://img.icons8.com/material-sharp/24/000000/mute.png"></button></li>
         </ul>
         <canvas id="canvas" width="240" height="480"></canvas>
-        <embed src="assets/tetris-official-theme-song.mp3" autostart="true" loop="true" hidden="true"></embed>
+        <audio id="audio"><source src="assets/tetris-official-theme-song.mp3" type="audio/mpeg"></audio>
     </div>
     <script>
         init();
+        const audio = document.getElementById("audio");
+        audio.onended = function(){
+            audio.play();
+        }
+        function mute(){
+            let but = document.getElementById("mute");
+            if(!audio.paused){
+                audio.pause();
+                but.innerHTML = '<img src="https://img.icons8.com/material-sharp/24/000000/mute.png">';
+            }
+            else{
+                audio.play();
+                but.innerHTML = '<img src="https://img.icons8.com/material-sharp/24/000000/high-volume.png">';
+            }
+        }
     </script>
 </body>
 </html>

@@ -130,9 +130,17 @@ function checklines(){
             grille[i+nbr][j] = grille[i][j];
         }
     }
-    let s = 80*(nbr+1);
+    let s = 80*calcScore(nbr);
     setLine(lines+nbr);
     setScore(score + s);
+}
+
+function calcScore(nbr){
+    let a = 0.5595238095;
+    let b = -0.7976190476;
+    let c = 2.285714286;
+    let y = a * Math.pow(nbr, 2) + b * nbr + c;
+    return Math.round(y);
 }
 
 function setLine(l){
@@ -250,7 +258,7 @@ function interval(){
                 break;
         }
         key = -1;
-        console.log(level);
+        //console.log(level);
         if((nbr+1) % (51-(level*2)) === 0) move();
         draw();
         nbr++;

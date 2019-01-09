@@ -6,8 +6,30 @@ h1{
     text-align: center;
     border: 1.5px black solid;
     margin: auto;
+    margin-bottom: 1px;
     display: block;
     width: 120px;
+}
+
+#mute{
+    display: block;
+    margin: auto;
+    margin-top: 50px;
+    border: none;
+    background: inherit;
+    -webkit-transition-duration: 0.4s;
+    transition-duration: 0.4s;
+    height: fit-content;
+    width: fit-content;
+}
+
+#mute:hover{
+    background-color: grey;
+}
+
+#mute image{
+    height: 30px;
+    width: 30px;
 }
 
 #canvas{
