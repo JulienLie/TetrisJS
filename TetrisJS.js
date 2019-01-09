@@ -246,6 +246,7 @@ function interval(){
             case 40:
             case 115:
                 tet.down();
+                setScore(score+1);
                 break;
         }
         key = -1;
